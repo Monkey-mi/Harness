@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>关于 · 临江阁</title>
+<meta name="description" content="关于临江阁 —— 一个安静的古文阅读处。">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('harness-theme');
+      if (t === 'light' || t === 'dark') {
+        document.documentElement.setAttribute('data-theme', t);
+      }
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="index.html">
+      <span class="site-brand__mark">临</span>
+      临江阁
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="archive.html">归档</a>
+      <a href="about.html" aria-current="page">关于</a>
+      <button class="theme-toggle" type="button" aria-label="切换主题">☾</button>
+    </nav>
+  </div>
+</header>
+
+<main class="site-main">
+
+  <div class="page-header">
+    <h1 class="page-header__title">关 于</h1>
+    <p class="page-header__sub">临江阁 · 古文清赏</p>
+  </div>
+
+  <div class="prose">
+
+    <h2>此阁何为</h2>
+    <p>
+      这里收一些想反复读的古文。不为考据,不为注释,只为把字句排得舒服些,
+      让读的人能安静地从头看到尾。第一篇选的是苏轼的《前赤壁赋》与《后赤壁赋》,
+      因为这两篇一秋一冬、一喜一惧,放在一起正好。
+    </p>
+
+    <h2>关于排版</h2>
+    <p>排版上做了这几件事:</p>
+    <ul>
+      <li>正文用宋体,标题用楷体,字距与行距都比常规网页放宽,以适配中文的方寸感</li>
+      <li>段首缩进两字,依循中文古籍的通例</li>
+      <li>名句单独立出,朱砂为记,不与叙述混同</li>
+      <li>提供日间与夜间两套配色,夜间为暖黑而非纯黑,久读不刺眼</li>
+      <li>页面可直接打印,打印时自动隐去导航与装饰</li>
+    </ul>
+
+    <h2>关于校勘</h2>
+    <p>
+      古文流传既久,异文难免。本站文本以通行版本为准,
+      凡遇「共适 / 共食」「缥缈 / 飘渺」一类分歧,均在各篇文末的
+      <em>版本说明</em> 中如实标出,不擅自统一。
+      若发现错字漏字,欢迎指出。
+    </p>
+
+    <h2>技术</h2>
+    <p>
+      纯静态 HTML 与 CSS,无框架、无构建步骤、无外部依赖,
+      也不加载任何第三方字体或统计脚本。
+      想加一篇新文章,只需复制 <code>templates/_template.html</code>,
+      在 <code>assets/js/posts.js</code> 的列表里登记一条即可。
+    </p>
+
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>
+    临江阁 · 古文清赏<br>
+    建站于 2026 年 · 静态站点,无追踪,无广告
+  </p>
+</footer>
+
+<script src="assets/js/posts.js"></script>
+<script src="assets/js/site.js"></script>
+
+</body>
+</html>

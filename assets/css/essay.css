@@ -1,0 +1,345 @@
+/* ==========================================================================
+   essay.css —— 古文文章排版
+   仅在文章页引入,与 site.css 配合使用
+   设计目标:竖排气质、疏朗留白、句读清晰,读来如观碑帖
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. 文章页容器
+   -------------------------------------------------------------------------- */
+.essay {
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   2. 篇首:标题 / 作者 / 装饰
+   -------------------------------------------------------------------------- */
+.essay__header {
+  text-align: center;
+  margin-bottom: var(--sp-8);
+}
+
+/* 篇名上方的小引,如「宋 · 元丰五年」 */
+.essay__eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  color: var(--ink-faint);
+  letter-spacing: 0.35em;
+  text-indent: 0.35em;
+  margin-bottom: var(--sp-5);
+}
+
+.essay__title {
+  font-family: var(--font-kai);
+  font-size: var(--fs-2xl);
+  font-weight: 600;
+  color: var(--ink-strong);
+  /* 古文篇名宜疏,字距拉开有碑额之气 */
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  line-height: 1.5;
+  margin: 0 0 var(--sp-4);
+}
+
+/* 篇名下的双细线,仿古籍版框 */
+.essay__rule {
+  width: 6rem;
+  height: 0;
+  margin: 0 auto var(--sp-5);
+  border-top: 1px solid var(--rule-strong);
+  border-bottom: 1px solid var(--rule);
+  padding-top: 3px;
+}
+
+.essay__byline {
+  font-family: var(--font-serif);
+  font-size: var(--fs-md);
+  color: var(--ink-soft);
+  letter-spacing: 0.2em;
+  text-indent: 0.2em;
+  margin: 0 0 var(--sp-4);
+}
+.essay__byline .dynasty {
+  font-size: 0.85em;
+  color: var(--ink-faint);
+  margin-right: 0.3em;
+}
+
+.essay__meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+}
+.essay__meta .dot { opacity: 0.4; }
+
+/* --------------------------------------------------------------------------
+   3. 正文
+   -------------------------------------------------------------------------- */
+.essay__body {
+  font-family: var(--font-serif);
+  font-size: 1.06rem;
+  /* 古文行距要松,字距略开,才不显拥挤 */
+  line-height: 2.35;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+/* 段:首行缩进两字(中文古籍通行做法),段间距适中 */
+.essay__body p {
+  margin: 0 0 var(--sp-5);
+  text-indent: 2em;
+  text-align: justify;
+  text-justify: inter-ideograph;
+  /* 避免孤字成行 */
+  orphans: 2;
+  widows: 2;
+}
+
+/* 篇首第一段不缩进,并做首字下沉式处理 */
+.essay__body > p:first-of-type {
+  text-indent: 0;
+}
+.essay__body > p:first-of-type::first-letter {
+  font-family: var(--font-kai);
+  font-size: 1em;
+  font-weight: 600;
+  color: var(--cinnabar);
+}
+
+/* --- 名句:独立成段,居中,朱砂点缀 --- */
+.essay__verse {
+  text-indent: 0;
+  text-align: center;
+  font-family: var(--font-kai);
+  font-size: 1.18rem;
+  line-height: 2.4;
+  letter-spacing: 0.14em;
+  color: var(--ink-strong);
+  margin: var(--sp-7) auto;
+  padding: var(--sp-5) var(--sp-4);
+  max-width: 30em;
+  position: relative;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--accent-bg) 20%,
+    var(--accent-bg) 80%,
+    transparent
+  );
+}
+/* 上下短横装饰 */
+.essay__verse::before,
+.essay__verse::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2.5rem;
+  height: 1px;
+  background: var(--cinnabar);
+  opacity: 0.5;
+}
+.essay__verse::before { top: 0; }
+.essay__verse::after  { bottom: 0; }
+
+/* 名句内的对仗断行 */
+.essay__verse span { display: block; }
+
+/* --- 带旁注的句子 --- */
+.essay__note {
+  font-family: var(--font-sans);
+  font-size: 0.72em;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+  /* 用竖线分隔,像古籍夹注 */
+  border-left: 2px solid var(--rule-strong);
+  padding-left: 0.5em;
+  margin-left: 0.3em;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+/* --- 分节小标题(如「其一」「其二」)--- */
+.essay__section {
+  text-indent: 0;
+  text-align: center;
+  font-family: var(--font-kai);
+  font-size: var(--fs-lg);
+  color: var(--ink-strong);
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  margin: var(--sp-7) 0 var(--sp-5);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   4. 篇末:落款与说明
+   -------------------------------------------------------------------------- */
+.essay__end {
+  text-indent: 0;
+  text-align: center;
+  margin: var(--sp-8) 0 var(--sp-6);
+  font-family: var(--font-kai);
+  font-size: var(--fs-sm);
+  color: var(--ink-faint);
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+}
+
+/* 版本说明 / 校勘记 */
+.essay__colophon {
+  margin: var(--sp-7) 0 0;
+  padding: var(--sp-5);
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  line-height: 2;
+  color: var(--ink-soft);
+}
+.essay__colophon h2 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-strong);
+  letter-spacing: 0.12em;
+  margin: 0 0 var(--sp-3);
+  padding: 0;
+  border: none;
+}
+.essay__colophon p { margin: 0 0 var(--sp-2); text-indent: 0; }
+.essay__colophon p:last-child { margin-bottom: 0; }
+.essay__colophon ul { margin: var(--sp-2) 0 0; padding-left: 1.3em; }
+.essay__colophon li { margin-bottom: var(--sp-1); }
+
+/* --------------------------------------------------------------------------
+   5. 自动目录
+   -------------------------------------------------------------------------- */
+.essay-toc {
+  max-width: var(--measure);
+  margin: 0 auto var(--sp-7);
+  padding: var(--sp-5) var(--sp-6);
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+.essay-toc__title {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--ink-faint);
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  margin: 0 0 var(--sp-3);
+  text-align: center;
+}
+.essay-toc__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--sp-3) var(--sp-5);
+}
+.essay-toc__list a {
+  font-family: var(--font-kai);
+  font-size: var(--fs-md);
+  color: var(--ink-soft);
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid transparent;
+}
+.essay-toc__list a:hover {
+  color: var(--cinnabar);
+  border-bottom-color: var(--cinnabar);
+}
+
+/* --------------------------------------------------------------------------
+   6. 上一篇 / 下一篇
+   -------------------------------------------------------------------------- */
+.post-nav {
+  max-width: var(--measure);
+  margin: var(--sp-8) auto 0;
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-5);
+}
+.post-nav__item {
+  display: block;
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  transition: all var(--dur) var(--ease);
+}
+.post-nav__item:hover {
+  border-color: var(--cinnabar);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.post-nav__item--next { text-align: right; }
+.post-nav__label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  color: var(--ink-faint);
+  letter-spacing: 0.12em;
+  margin-bottom: var(--sp-1);
+}
+.post-nav__title {
+  font-family: var(--font-kai);
+  font-size: var(--fs-md);
+  color: var(--ink-strong);
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+}
+/* 只有一端时占满 */
+.post-nav--single { grid-template-columns: 1fr; }
+
+/* --------------------------------------------------------------------------
+   6. 阅读进度条(顶部)
+   -------------------------------------------------------------------------- */
+.progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0;
+  background: var(--cinnabar);
+  z-index: 100;
+  transition: width 80ms linear;
+  opacity: 0.75;
+}
+
+/* --------------------------------------------------------------------------
+   7. 响应式
+   -------------------------------------------------------------------------- */
+@media (max-width: 40rem) {
+  .essay__title { font-size: 1.6rem; letter-spacing: 0.16em; text-indent: 0.16em; }
+  .essay__body { font-size: 1.02rem; line-height: 2.15; }
+  .essay__verse { font-size: 1.06rem; padding: var(--sp-4) var(--sp-3); }
+  .essay__note { white-space: normal; display: inline; }
+  .post-nav { grid-template-columns: 1fr; gap: var(--sp-4); }
+  .post-nav__item--next { text-align: left; }
+}
+
+/* --------------------------------------------------------------------------
+   8. 打印:古文要能干净地打出来
+   -------------------------------------------------------------------------- */
+@media print {
+  .progress { display: none; }
+  .essay__body { font-size: 11pt; line-height: 1.9; }
+  .essay__verse { background: none; padding: 0; margin: 1.2em auto; }
+  .essay__verse::before, .essay__verse::after { display: none; }
+  .essay__colophon { border: 1px solid #999; background: none; }
+  .essay__header { margin-bottom: 2em; }
+}

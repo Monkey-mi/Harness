@@ -1,0 +1,33 @@
+# 凭据与密钥 —— 绝对不要提交
+.dsh-github/
+.git-credentials
+*.pem
+*.key
+id_ed25519
+id_ed25519.pub
+
+# macOS
+.DS_Store
+._*
+
+# 编辑器 / IDE
+.vscode/
+.idea/
+*.swp
+
+# 环境变量
+.env
+.env.*
+!.env.example
+
+# 常见构建产物与依赖(按实际技术栈删减)
+node_modules/
+dist/
+build/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 日志
+*.log

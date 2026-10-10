@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>归档 · 临江阁</title>
+<meta name="description" content="临江阁全部文章归档,按年份排列。">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('harness-theme');
+      if (t === 'light' || t === 'dark') {
+        document.documentElement.setAttribute('data-theme', t);
+      }
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="index.html">
+      <span class="site-brand__mark">临</span>
+      临江阁
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="archive.html" aria-current="page">归档</a>
+      <a href="about.html">关于</a>
+      <button class="theme-toggle" type="button" aria-label="切换主题">☾</button>
+    </nav>
+  </div>
+</header>
+
+<main class="site-main">
+
+  <div class="page-header">
+    <h1 class="page-header__title">归 档</h1>
+    <p class="page-header__sub" id="archive-count"></p>
+  </div>
+
+  <div id="archive"></div>
+
+  <div class="section-head">
+    <h2 class="section-head__title">标 签</h2>
+    <span class="section-head__rule" aria-hidden="true"></span>
+  </div>
+  <div class="post-card__tags" id="tags"></div>
+
+</main>
+
+<footer class="site-footer">
+  <p>
+    临江阁 · 古文清赏<br>
+    建站于 2026 年 · 静态站点,无追踪,无广告
+  </p>
+</footer>
+
+<script src="assets/js/posts.js"></script>
+<script src="assets/js/site.js"></script>
+<script>
+  (function () {
+    var posts = window.HarnessPosts.all();
+
+    window.HarnessPosts.renderArchive(document.getElementById('archive'), { prefix: '' });
+    window.HarnessPosts.renderTags(document.getElementById('tags'), { prefix: '' });
+
+    var c = document.getElementById('archive-count');
+    if (c) c.textContent = posts.length ? '共计 ' + posts.length + ' 篇' : '暂无文章';
+  })();
+</script>
+
+</body>
+</html>

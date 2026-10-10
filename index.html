@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>临江阁 · 古文博客</title>
+<meta name="description" content="临江阁 —— 一个安静的古文阅读处。收录苏轼《前后赤壁赋》等经典文本,以疏朗排版呈现。">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>
+  // 在样式应用前决定主题,避免暗色用户看到白光一闪
+  (function () {
+    try {
+      var t = localStorage.getItem('harness-theme');
+      if (t === 'light' || t === 'dark') {
+        document.documentElement.setAttribute('data-theme', t);
+      }
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="index.html">
+      <span class="site-brand__mark">临</span>
+      临江阁
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="index.html" aria-current="page">首页</a>
+      <a href="archive.html">归档</a>
+      <a href="about.html">关于</a>
+      <button class="theme-toggle" type="button" aria-label="切换主题">☾</button>
+    </nav>
+  </div>
+</header>
+
+<main class="site-main">
+
+  <section class="hero">
+    <h1 class="hero__title">临江阁</h1>
+    <p class="hero__subtitle">古 文 清 赏</p>
+    <div class="hero__rule" aria-hidden="true"></div>
+    <div class="hero__verse">
+      <span>清风徐来,水波不兴。</span>
+      <span>白露横江,水光接天。</span>
+    </div>
+    <p style="margin-top:var(--sp-6)">
+      <span class="seal">壬戌之秋</span>
+    </p>
+  </section>
+
+  <div class="section-head">
+    <h2 class="section-head__title">文 章</h2>
+    <span class="section-head__rule" aria-hidden="true"></span>
+    <span class="section-head__count" id="post-count"></span>
+  </div>
+
+  <div id="post-list"></div>
+
+</main>
+
+<footer class="site-footer">
+  <p>
+    临江阁 · 古文清赏<br>
+    建站于 2026 年 · 静态站点,无追踪,无广告
+  </p>
+</footer>
+
+<script src="assets/js/posts.js"></script>
+<script src="assets/js/site.js"></script>
+<script>
+  (function () {
+    var list = window.HarnessPosts.all();
+    window.HarnessPosts.renderList(document.getElementById('post-list'), { prefix: '' });
+
+    var countEl = document.getElementById('post-count');
+    if (countEl) {
+      countEl.textContent = list.length ? '共 ' + list.length + ' 篇' : '';
+    }
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>管理 · 临江阁</title>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/admin.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('harness-theme');
+      if (t === 'light' || t === 'dark') {
+        document.documentElement.setAttribute('data-theme', t);
+      }
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body class="admin-body">
+
+<!-- ==========================================================================
+     一、登录弹框
+     注意:这是纯前端口令,只用于隐藏界面入口,不构成安全边界。
+     ========================================================================== -->
+<div class="modal" id="login-modal" hidden>
+  <div class="modal__backdrop" data-close></div>
+  <div class="modal__box" role="dialog" aria-modal="true" aria-labelledby="login-title">
+    <h2 class="modal__title" id="login-title">管理登录</h2>
+    <p class="modal__hint">输入口令以进入管理界面</p>
+    <form id="login-form" autocomplete="off">
+      <input class="input" type="password" id="login-password" name="password"
+             placeholder="口令" autocomplete="current-password" required>
+      <p class="modal__error" id="login-error" role="alert" hidden></p>
+      <div class="modal__actions">
+        <button class="btn btn--ghost" type="button" data-close>取消</button>
+        <button class="btn btn--primary" type="submit">进入</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ==========================================================================
+     二、管理界面
+     ========================================================================== -->
+<div class="admin" id="admin-app" hidden>
+
+  <header class="admin__header">
+    <div class="admin__brand">
+      <span class="site-brand__mark">临</span>
+      <span>临江阁 · 管理</span>
+    </div>
+    <div class="admin__header-actions">
+      <a class="admin__link" href="../index.html" target="_blank" rel="noopener">查看站点 ↗</a>
+      <button class="btn btn--ghost btn--sm" type="button" id="btn-logout">退出</button>
+    </div>
+  </header>
+
+  <!-- 令牌未配置时的引导 -->
+  <section class="admin__gate" id="token-gate" hidden>
+    <h2 class="admin__gate-title">第一步:配置 GitHub 令牌</h2>
+    <p class="admin__gate-text">
+      发布文章需要一枚具备 <code>Contents: Read and write</code> 权限的
+      GitHub Fine-grained PAT。令牌只保存在<strong>本浏览器</strong>的 localStorage 中,
+      <strong>不会进入仓库</strong>,也不会被上传到别处。
+    </p>
+    <p class="admin__gate-warn">
+      ⚠️ 共用电脑上请勿保存令牌;不要使用其他站点粘贴过令牌的浏览器。
+    </p>
+    <div class="field">
+      <label class="field__label" for="token-input">Personal Access Token</label>
+      <input class="input" type="password" id="token-input"
+             placeholder="github_pat_..." autocomplete="off" spellcheck="false">
+    </div>
+    <div class="field">
+      <label class="field__label" for="token-remember">
+        <input type="checkbox" id="token-remember" checked> 记住令牌(存于本浏览器)
+      </label>
+    </div>
+    <div class="admin__gate-actions">
+      <button class="btn btn--primary" type="button" id="btn-save-token">保存并验证</button>
+    </div>
+    <p class="admin__status" id="token-status" role="status"></p>
+  </section>
+
+  <!-- 令牌就绪后的工作区 -->
+  <section class="admin__workspace" id="workspace" hidden>
+
+    <div class="admin__toolbar">
+      <span class="admin__account" id="account-info"></span>
+      <button class="btn btn--ghost btn--sm" type="button" id="btn-forget-token">清除令牌</button>
+    </div>
+
+    <div class="admin__grid">
+
+      <!-- 左:表单 -->
+      <form class="admin__form" id="post-form" autocomplete="off">
+
+        <h2 class="admin__section-title">文章信息</h2>
+
+        <div class="field-row">
+          <div class="field">
+            <label class="field__label" for="f-title">篇名 <span class="req">必填</span></label>
+            <input class="input" id="f-title" required placeholder="如:前赤壁赋">
+          </div>
+          <div class="field">
+            <label class="field__label" for="f-slug">网址标识 <span class="req">必填</span></label>
+            <input class="input" id="f-slug" required placeholder="如:qian-chibi-fu"
+                   pattern="[a-z0-9\-]+" title="只允许小写字母、数字与连字符">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label class="field__label" for="f-dynasty">朝代</label>
+            <input class="input" id="f-dynasty" placeholder="如:宋">
+          </div>
+          <div class="field">
+            <label class="field__label" for="f-author">作者</label>
+            <input class="input" id="f-author" placeholder="如:苏轼">
+          </div>
+          <div class="field">
+            <label class="field__label" for="f-date">日期 <span class="req">必填</span></label>
+            <input class="input" id="f-date" type="date" required>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label class="field__label" for="f-genre">体裁</label>
+            <input class="input" id="f-genre" placeholder="如:赋">
+          </div>
+          <div class="field">
+            <label class="field__label" for="f-eyebrow">篇首小引</label>
+            <input class="input" id="f-eyebrow" placeholder="如:宋 · 元丰五年 · 壬戌">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="f-tags">标签</label>
+          <input class="input" id="f-tags" placeholder="用逗号分隔,如:古文, 赤壁赋, 苏轼">
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="f-summary">列表摘要</label>
+          <input class="input" id="f-summary" placeholder="一两句,显示在首页卡片上">
+        </div>
+
+        <h2 class="admin__section-title">正文</h2>
+        <p class="field__hint">
+          直接粘贴纯文本,一行一段。<br>
+          以 <code>【】</code> 包住的一行会作为分节小标题;<br>
+          较短且以句号结尾的整句若单独成行,会自动排成「名句」样式。
+        </p>
+        <div class="field">
+          <textarea class="input input--area" id="f-body" rows="16"
+                    placeholder="壬戌之秋,七月既望,苏子与客泛舟游于赤壁之下。&#10;&#10;【第一节】&#10;&#10;……"></textarea>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="f-colophon">版本说明 / 校勘记(可选,支持多行)</label>
+          <textarea class="input input--area" id="f-colophon" rows="4"
+                    placeholder="本篇文字以……为底本。&#10;异文列下,存而不改:"></textarea>
+        </div>
+
+        <details class="admin__advanced">
+          <summary>高级选项</summary>
+          <div class="field">
+            <label class="field__label" for="f-ordinal">
+              字数标注(可选,中文数字,如「五百三十七」)
+            </label>
+            <input class="input" id="f-ordinal" placeholder="留空则自动统计正文汉字数">
+          </div>
+          <div class="field">
+            <label class="field__label" for="f-excerpt-verse">
+              首页诗句(可选,用 <code>|</code> 分隔两行)
+            </label>
+            <input class="input" id="f-excerpt-verse" placeholder="清风徐来,水波不兴。|白露横江,水光接天。">
+          </div>
+        </details>
+
+        <div class="admin__form-actions">
+          <button class="btn btn--ghost" type="button" id="btn-preview">预览排版</button>
+          <button class="btn btn--primary" type="submit" id="btn-publish">发布到 GitHub</button>
+        </div>
+        <p class="admin__status" id="publish-status" role="status"></p>
+      </form>
+
+      <!-- 右:预览 -->
+      <div class="admin__preview">
+        <h2 class="admin__section-title">预览</h2>
+        <div class="admin__preview-frame">
+          <iframe id="preview-frame" title="排版预览" sandbox="allow-same-origin"></iframe>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- 排版模板:结构取自 templates/_template.html,占位符由 admin.js 填充。
+     为便于放进 <template> 且不被 HTML 解析器误判,此处以 @@ENDSCRIPT@@
+     代表 script 的结束标签,读取时由 readTemplate() 还原。 -->
+
+
+<footer class="site-footer">
+  <p>
+    临江阁 · 管理界面<br>
+    令牌仅存于本浏览器 · 不进入仓库
+  </p>
+</footer>
+
+<template id="post-template">
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  文章模板 —— 新增文章请复制本文件到 posts/ 目录,然后:
+    1. 把下面所有 [方括号] 里的内容换成你的文章信息
+    2. 在 assets/js/posts.js 的 POSTS 数组里加一条同 slug 的记录
+    3. 完成,首页与归档页会自动收录
+  注意:本文件在 posts/ 子目录下,引用资源要写 ../assets/...
+  ============================================================================
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__ · 临江阁</title>
+<meta name="description" content="__DESCRIPTION__">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/essay.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('harness-theme');
+      if (t === 'light' || t === 'dark') {
+        document.documentElement.setAttribute('data-theme', t);
+      }
+    } catch (e) {}
+  })();
+</script>@POSTHTML@
+</head>
+<body>
+
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="../index.html">
+      <span class="site-brand__mark">临</span>
+      临江阁
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../index.html">首页</a>
+      <a href="../archive.html">归档</a>
+      <a href="../about.html">关于</a>
+      <button class="theme-toggle" type="button" aria-label="切换主题">☾</button>
+    </nav>
+  </div>
+</header>
+
+<main class="site-main">
+<article class="essay">
+
+  <header class="essay__header">
+    <p class="essay__eyebrow">__EYEBROW__</p>
+    <h1 class="essay__title">__TITLE__</h1>
+    <div class="essay__rule" aria-hidden="true"></div>
+    <p class="essay__byline"><span class="dynasty">__DYNASTY__</span>__AUTHOR__</p>
+    <div class="essay__meta">
+      <time datetime="__DATE__">__DATE_DISPLAY__</time>
+      <span class="dot">·</span>
+      <span>__GENRE__</span>
+      <span class="dot">·</span>
+      <span>__ORDINAL__字</span>
+    </div>
+  </header>
+
+  <!-- 可选:自动目录。正文中有两个以上 .essay__section 时才会显示 -->
+  <div data-toc></div>
+
+  <div class="essay__body">
+__BODY__
+  </div>
+
+  <p class="essay__end">— 终 —</p>
+
+  <!-- 版本说明 / 校勘记,可选 -->
+__COLOPHON__
+</article>
+
+<nav class="post-nav" id="post-nav" aria-label="文章导航"></nav>
+</main>
+
+<footer class="site-footer">
+  <p>
+    临江阁 · 古文清赏<br>
+    建站于 2026 年 · 静态站点,无追踪,无广告
+  </p>
+</footer>
+
+<script src="../assets/js/posts.js"></script>@POSTHTML@
+<script src="../assets/js/site.js"></script>@POSTHTML@
+<script>
+  (function () {
+    // __SLUG__ 必须与 posts.js 中的 slug 一致
+    var SLUG = '__SLUG__';
+    window.HarnessPosts.renderPostNav(
+      document.getElementById('post-nav'), SLUG, '../'
+    );
+  })();
+</script>@POSTHTML@
+
+</body>
+</html>
+</template>
+
+<script src="../assets/js/admin.js"></script>
+</body>
+</html>

@@ -32,7 +32,7 @@
 │       └── favicon.svg         站点图标
 │
 └── docs/                       项目文档(不影响站点运行)
-    ├── verify_text.py          ⑥ 正文校勘校验工具
+    ├── verify_text.py          正文校勘校验工具
     └── preview/                站点预览图
 ```
 
@@ -143,6 +143,9 @@ python3 docs/verify_text.py
 
 **每次编辑正文后请跑一次。** 若要新增篇目,在 `REFERENCE` 里补一条对应记录即可纳入校验。
 
+仓库还配置了 `.github/workflows/verify-text.yml`,**每次推送与 PR 都会自动跑这个校验**,
+校勘不通过则 CI 失败,从而挡住讹字入库。
+
 > 新增篇目的校勘基准,建议取自维基文库、识典古籍等可溯源的版本,
 > 并在注释中写明所据来源与异文取舍,以便日后复核。
 
@@ -150,13 +153,27 @@ python3 docs/verify_text.py
 
 ## 四、部署到 GitHub Pages
 
-1. 把代码推送到仓库的 `main` 分支
-2. 打开仓库 **Settings → Pages**
-3. **Source** 选 `Deploy from a branch`
-4. **Branch** 选 `main`,目录选 `/ (root)`,保存
-5. 等一两分钟,访问 `https://<用户名>.github.io/<仓库名>/`
+本仓库是纯静态站点,首页为 `index.html`,因此**推荐用「分支部署」,零依赖、不需要任何工作流**:
 
-因为站点是纯静态且首页名为 `index.html`,无需任何额外配置。
+1. 打开仓库 **Settings → Pages**
+2. **Source** 选 `Deploy from a branch`
+3. **Branch** 选 `main`,目录选 `/ (root)`,保存
+4. 等一两分钟,访问 `https://<用户名>.github.io/<仓库名>/`
+
+即:本项目的预期网址是 **https://monkey-mi.github.io/Harness/**
+
+### 另一种方式:GitHub Actions
+
+若日后加入了构建步骤(如 Markdown 生成 HTML、图片压缩),再改用 Actions 方式:
+
+1. **Settings → Pages → Source** 改选 `GitHub Actions`
+2. 在 `.github/workflows/` 下新增一个部署工作流,权限需包含
+   `pages: write` 与 `id-token: write`,并使用
+   `actions/configure-pages` → `actions/upload-pages-artifact` → `actions/deploy-pages`
+
+> 注意:在 Pages 尚未启用时,`actions/configure-pages` 会**失败**,这是预期行为
+> (它要求 Pages 已存在)。所以本项目默认不启用 Actions 部署,
+> 避免每次推送都在 Actions 里留下一个失败记录。
 
 ---
 

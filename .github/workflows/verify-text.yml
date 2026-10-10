@@ -1,0 +1,29 @@
+# ============================================================================
+# 推送时校验正文校勘
+#
+# 本仓库是纯静态站点:pages 由「分支部署」提供,不需要构建步骤,
+# 因此这里只做一件事 —— 每次推送/PR 都校验正文没有讹字。
+#
+# 若日后改用「GitHub Actions」方式发布,可在本文件后面追加部署步骤,
+# 并把下面的 permissions 改为 contents: read / pages: write / id-token: write。
+# ============================================================================
+name: 校验正文
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 校勘正文(逐字比对权威基准)
+        run: python3 docs/verify_text.py

@@ -153,27 +153,31 @@ python3 docs/verify_text.py
 
 ## 四、部署到 GitHub Pages
 
-本仓库是纯静态站点,首页为 `index.html`,因此**推荐用「分支部署」,零依赖、不需要任何工作流**:
+本仓库是纯静态站点,首页为 `index.html`,因此用**分支部署**:零依赖、不需要任何工作流。
+
+**启用步骤(只需一次,必须在网页上操作):**
 
 1. 打开仓库 **Settings → Pages**
 2. **Source** 选 `Deploy from a branch`
-3. **Branch** 选 `main`,目录选 `/ (root)`,保存
-4. 等一两分钟,访问 `https://<用户名>.github.io/<仓库名>/`
+3. **Branch** 选 `main`,目录选 `/ (root)`,点 **Save**
+4. 等一两分钟,访问 **https://monkey-mi.github.io/Harness/**
 
-即:本项目的预期网址是 **https://monkey-mi.github.io/Harness/**
+之后每次推送到 `main`,Pages 会自动重新发布,无需任何额外操作。
 
-### 另一种方式:GitHub Actions
+### 为什么不用 GitHub Actions 部署
 
-若日后加入了构建步骤(如 Markdown 生成 HTML、图片压缩),再改用 Actions 方式:
+本站没有构建步骤,分支部署已经足够,加一层工作流只会增加故障点。
+实测结论如下,供日后需要构建时参考:
 
-1. **Settings → Pages → Source** 改选 `GitHub Actions`
-2. 在 `.github/workflows/` 下新增一个部署工作流,权限需包含
-   `pages: write` 与 `id-token: write`,并使用
-   `actions/configure-pages` → `actions/upload-pages-artifact` → `actions/deploy-pages`
+- **Pages 未启用时,`actions/configure-pages` 必定失败**。它要求站点已存在,
+  即便加上 `enablement: true` 也一样——启用站点需要 `administration: write`,
+  而工作流中的 `GITHUB_TOKEN` **无法被授予仓库管理权限**(CI 不能给自己扩权)。
+- 想用 API 自动启用,只能用 **PAT**,且该 PAT 必须带 `administration: write`。
+- 另注意:工作流文件里写 `administration: write` 这类**不存在的权限名**,
+  会导致整个工作流解析失败、连 job 都不会启动,在 Actions 里表现为一个无日志的失败记录。
 
-> 注意:在 Pages 尚未启用时,`actions/configure-pages` 会**失败**,这是预期行为
-> (它要求 Pages 已存在)。所以本项目默认不启用 Actions 部署,
-> 避免每次推送都在 Actions 里留下一个失败记录。
+因此本项目只保留 `.github/workflows/verify-text.yml`,用于推送时校验正文,
+不承担部署职责。
 
 ---
 

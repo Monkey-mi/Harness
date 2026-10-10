@@ -102,53 +102,32 @@
   widows: 2;
 }
 
-/* 篇首第一段不缩进,并做首字下沉式处理 */
+/* 篇首第一段不缩进,与标题区形成呼吸 */
 .essay__body > p:first-of-type {
   text-indent: 0;
 }
-.essay__body > p:first-of-type::first-letter {
-  font-family: var(--font-kai);
-  font-size: 1em;
-  font-weight: 600;
-  color: var(--cinnabar);
-}
 
-/* --- 名句:独立成段,居中,朱砂点缀 --- */
+/* --- 名句:独立成段,居中。层次全靠字体、字距与留白,不用描边与装饰线 --- */
 .essay__verse {
   text-indent: 0;
   text-align: center;
   font-family: var(--font-kai);
-  font-size: 1.18rem;
-  line-height: 2.4;
-  letter-spacing: 0.14em;
+  font-size: 1.32rem;
+  font-weight: 500;
+  line-height: 2.6;
+  letter-spacing: 0.2em;
   color: var(--ink-strong);
-  margin: var(--sp-7) auto;
-  padding: var(--sp-5) var(--sp-4);
-  max-width: 30em;
+  margin: var(--sp-6) auto;
+  padding: 0 var(--sp-2);
+  max-width: 28em;
   position: relative;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    var(--accent-bg) 20%,
-    var(--accent-bg) 80%,
-    transparent
+  /* 极淡的横向光晕,边缘向外自然消隐,不形成矩形色块 */
+  background: radial-gradient(
+    ellipse 70% 100% at 50% 50%,
+    var(--accent-bg),
+    transparent 75%
   );
 }
-/* 上下短横装饰 */
-.essay__verse::before,
-.essay__verse::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 2.5rem;
-  height: 1px;
-  background: var(--cinnabar);
-  opacity: 0.5;
-}
-.essay__verse::before { top: 0; }
-.essay__verse::after  { bottom: 0; }
-
 /* 名句内的对仗断行 */
 .essay__verse span { display: block; }
 

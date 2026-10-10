@@ -32,7 +32,19 @@
 │       └── favicon.svg         站点图标
 │
 └── docs/                       项目文档(不影响站点运行)
+    └── preview/                站点预览图
 ```
+
+### 预览图
+
+`docs/preview/` 下有四张截图,可直接在仓库里查看排版效果:
+
+| 文件 | 内容 |
+|---|---|
+| `home-light.png` | 首页(浅色宣纸模式) |
+| `qian-chibi-fu-light.png` | 《前赤壁赋》(浅色) |
+| `qian-chibi-fu-dark.png` | 《前赤壁赋》(暗色夜读) |
+| `hou-chibi-fu-full.png` | 《后赤壁赋》整页,含版本说明与篇间导航 |
 
 ### 为什么这样分层
 

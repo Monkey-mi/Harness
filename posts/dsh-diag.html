@@ -1,0 +1,106 @@
+
+
+<!--
+  ============================================================================
+  文章模板 —— 新增文章请复制本文件到 posts/ 目录,然后:
+    1. 把下面所有 [方括号] 里的内容换成你的文章信息
+    2. 在 assets/js/posts.js 的 POSTS 数组里加一条同 slug 的记录
+    3. 完成,首页与归档页会自动收录
+  注意:本文件在 posts/ 子目录下,引用资源要写 ../assets/...
+  ============================================================================
+-->
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>诊断稿 · 临江阁</title>
+<meta name="description" content="诊断稿全文">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/essay.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('harness-theme');
+      if (t === 'light' || t === 'dark') {
+        document.documentElement.setAttribute('data-theme', t);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+
+
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="../index.html">
+      <span class="site-brand__mark">临</span>
+      临江阁
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../index.html">首页</a>
+      <a href="../archive.html">归档</a>
+      <a href="../about.html">关于</a>
+      <button class="theme-toggle" type="button" aria-label="切换主题">☾</button>
+    </nav>
+  </div>
+</header>
+
+<main class="site-main">
+<article class="essay">
+
+  <header class="essay__header">
+    <p class="essay__eyebrow"></p>
+    <h1 class="essay__title">诊断稿</h1>
+    <div class="essay__rule" aria-hidden="true"></div>
+    <p class="essay__byline"><span class="dynasty"></span></p>
+    <div class="essay__meta">
+      <time datetime="2026-10-10">2026 年 10 月 10 日</time>
+      <span class="dot">·</span>
+      <span>文</span>
+      <span class="dot">·</span>
+      <span>四字</span>
+    </div>
+  </header>
+
+  <!-- 可选:自动目录。正文中有两个以上 .essay__section 时才会显示 -->
+  <div data-toc=""></div>
+
+  <div class="essay__body">
+    <p class="essay__verse">
+  <span>诊断正文。</span>
+</p>
+  </div>
+
+  <p class="essay__end">— 终 —</p>
+
+  <!-- 版本说明 / 校勘记,可选 -->
+
+</article>
+
+<nav class="post-nav" id="post-nav" aria-label="文章导航"></nav>
+</main>
+
+<footer class="site-footer">
+  <p>
+    临江阁 · 古文清赏<br>
+    建站于 2026 年 · 静态站点,无追踪,无广告
+  </p>
+</footer>
+
+<script src="../assets/js/posts.js"></script>
+<script src="../assets/js/site.js"></script>
+<script>
+  (function () {
+    // dsh-diag 必须与 posts.js 中的 slug 一致
+    var SLUG = 'dsh-diag';
+    window.HarnessPosts.renderPostNav(
+      document.getElementById('post-nav'), SLUG, '../'
+    );
+  })();
+</script>
+
+
+

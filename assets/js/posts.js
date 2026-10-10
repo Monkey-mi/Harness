@@ -40,31 +40,6 @@
       summary: '是岁十月之望,步自雪堂,将归于临皋。霜露既降,木叶尽脱。',
       tags: ['古文', '赤壁赋', '苏轼'],
       featured: true
-    },
-    {
-      slug: 'qian-chibi-fu',
-      title: '前赤壁赋',
-      author: '苏轼',
-      dynasty: '宋',
-      date: '2026-10-10',
-      summary: '壬戌之秋,七月既望,苏子与客泛舟游于赤壁之下。清风徐来,水波不兴。',
-      tags: ['古文', '赤壁赋', '苏轼'],
-      featured: true
-    },
-    {
-      slug: 'hou-chibi-fu',
-      title: '后赤壁赋',
-      author: '苏轼',
-      dynasty: '宋',
-      date: '2026-10-10',
-      summary: '是岁十月之望,步自雪堂,将归于临皋。霜露既降,木叶尽脱。',
-      tags: ['古文', '赤壁赋', '苏轼'],
-      featured: true
-    }
-    {
-      slug: 'dsh-diag',
-      title: '诊断稿',
-      date: '2026-10-10'
     }
   ];
 
